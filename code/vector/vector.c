@@ -1,34 +1,34 @@
-//ÓÃcÓïÑÔÊµÏÖVector ÓÃ³ÉÔ±Ö¸ÕëµÄ·½·¨ ·½·¨¶ş:Á´±íĞÎÊ½»¹Ã»ÓĞÊµÏÖ
+//ç”¨cè¯­è¨€å®ç°Vector ç”¨æˆå‘˜æŒ‡é’ˆçš„æ–¹æ³• æ–¹æ³•äºŒ:é“¾è¡¨å½¢å¼è¿˜æ²¡æœ‰å®ç°
 
-//·½·¨Ò»:
+//æ–¹æ³•ä¸€:
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
 #include<string.h>
 
-typedef int DataType; //Êı¾İÀàĞÍint
+typedef int DataType; //æ•°æ®ç±»å‹int
 
 typedef struct array
 {
 	DataType *Data; 
-	int size,max_size;  //max_szieÎªvector×î´óÈİÁ¿ szieÎªµ±Ç°´óĞ¡
-    void (*Constructor)(struct array *); //¹¹Ôìº¯Êı
-	void (*Input)(DataType,struct array*); //ÊäÈëÊı¾İ
-	int (*get_array_size)(struct array *); //»ñÈ¡arrayµÄ´óĞ¡
-	int (*return_index_value)(struct array*,int); //·µ»ØÏÂ±êÎªindexµÄÖµ
-	void (*print)(struct array*);  //´òÓ¡½á¹û
-	void (*Destructor)(struct array *);  //Îö¹¹º¯Êı
+	int size,max_size;  //max_szieä¸ºvectoræœ€å¤§å®¹é‡ szieä¸ºå½“å‰å¤§å°
+    void (*Constructor)(struct array *); //æ„é€ å‡½æ•°
+	void (*Input)(DataType,struct array*); //è¾“å…¥æ•°æ®
+	int (*get_array_size)(struct array *); //è·å–arrayçš„å¤§å°
+	int (*return_index_value)(struct array*,int); //è¿”å›ä¸‹æ ‡ä¸ºindexçš„å€¼
+	void (*print)(struct array*);  //æ‰“å°ç»“æœ
+	void (*Destructor)(struct array *);  //ææ„å‡½æ•°
 }Array;
 
 void Init(Array *this);
-void _print(struct array *this);
+void _print(Array *this);
 void _constructor(Array *this);
 void _denstructor(Array *this);
 void _input(DataType data,Array *this);
 int _get_size(Array *this);
 int _return_index_value(Array *this,int index);
 
-void Init(Array *this) //¹¹Ôìº¯Êı
+void Init(Array *this) //æ„é€ å‡½æ•°
 {
 	this->Input = _input;
 	this->print = _print;
@@ -39,15 +39,15 @@ void Init(Array *this) //¹¹Ôìº¯Êı
 	this->Constructor(this);
 }
 
-void _constructor(Array *this)  //¹¹Ôìº¯Êı
+void _constructor(Array *this)  //æ„é€ å‡½æ•°
 {
 	this->size=0;
-	this->max_size=10;  //Ä¬ÈÏ×î´óÈİÁ¿Îª10
+	this->max_size=10;  //é»˜è®¤æœ€å¤§å®¹é‡ä¸º10
 	this->Data=(DataType *)malloc(this->max_size*sizeof(DataType));
-	memset(this->Data,0,10*sizeof(DataType)); //³õÊ¼»¯º¯Êı
+	memset(this->Data,0,10*sizeof(DataType)); //åˆå§‹åŒ–å‡½æ•°
 }
 
-void _input(DataType data,Array *this) //ÊäÈëº¯Êı
+void _input(DataType data,Array *this) //è¾“å…¥å‡½æ•°
 {
 	int i;
 	DataType *ptr;
@@ -56,14 +56,14 @@ void _input(DataType data,Array *this) //ÊäÈëº¯Êı
 		ptr=(DataType *)malloc(this->max_size*sizeof(DataType));
 		for(i=0;i<this->size;i++)
 			ptr[i]=this->Data[i];
-		free(this->Data); //ÊÍ·ÅÖ®Ç°¿Õ¼ä
+		free(this->Data); //é‡Šæ”¾ä¹‹å‰ç©ºé—´
 		this->Data=ptr;
 	}
 	this->Data[this->size]=data;
     this->size+=1;
 }
 
-void _print(struct array *this)  //Êä³öº¯Êı
+void _print(struct array *this)  //è¾“å‡ºå‡½æ•°
 {
 	int i=0;
 	struct array *ptr=this;
@@ -73,19 +73,19 @@ void _print(struct array *this)  //Êä³öº¯Êı
 	return;
 }
 
-int  _get_size(Array *this) //»ñÈ¡array´óĞ¡
+int  _get_size(Array *this) //è·å–arrayå¤§å°
 {
 	assert(this!=NULL);
 	return this->size;
 }
 
-int _return_index_value(Array *this,int index) //·µ»ØÏÂ±êÎªindexµÄÖµ
+int _return_index_value(Array *this,int index) //è¿”å›ä¸‹æ ‡ä¸ºindexçš„å€¼
 {
 	assert(this!=NULL);
 	return (this->Data[index]);
 }
 
-void _denstructor(Array *this) //Îö¹¹º¯Êı
+void _denstructor(Array *this) //ææ„å‡½æ•°
 {
 	int i=0;
 	assert(this!=NULL);
@@ -102,7 +102,7 @@ int main()
 	MyArray.Input(3,&MyArray);
 	MyArray.Input(5,&MyArray);	
 	MyArray.Input(4,&MyArray);
-	MyArray.Input('c',&MyArray);//Ö»ÄÜµ¥Ò»ÀàĞÍ
+	MyArray.Input('c',&MyArray);//åªèƒ½å•ä¸€ç±»å‹
 	MyArray.Input(7,&MyArray);
 	MyArray.print(&MyArray);
 	printf("the array size is:%d\n",MyArray.get_array_size(&MyArray));
